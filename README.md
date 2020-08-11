@@ -1,5 +1,9 @@
 # Upstride argument parser
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![Build Status](https://travis-ci.org/UpStride/betterargparse.svg?branch=master)](https://travis-ci.org/github/UpStride/betterargparse)
+
+
 This package provides a simple and efficient argument parser for every python projects. The idea is to define once all the arguments and then be able to parse 
 them from the command line or configuration files
 
