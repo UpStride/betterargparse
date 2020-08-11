@@ -7,7 +7,7 @@ setuptools.setup(
     name="upstride_argparse",
     version="1.0.0",
     author="Upstride",
-    author_email="sebastien.iooqq@upstride.io",
+    author_email="pypi@upstride.io",
     description="Simple and efficient argument parser for every python projects",
     long_description=long_description,
     long_description_content_type="text/markdown",
