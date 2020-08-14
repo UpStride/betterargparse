@@ -1,4 +1,4 @@
-# Upstride argument parser
+# UpStride argument parser
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![Build Status](https://travis-ci.org/UpStride/betterargparse.svg?branch=master)](https://travis-ci.org/github/UpStride/betterargparse)
