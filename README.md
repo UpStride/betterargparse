@@ -4,14 +4,14 @@
 [![Build Status](https://travis-ci.org/UpStride/betterargparse.svg?branch=master)](https://travis-ci.org/github/UpStride/betterargparse)
 
 
-This package provides a simple and efficient argument parser for every python projects. The idea is to define once all the arguments and then be able to parse 
+This package provides a simple and efficient argument parser for any python project. The idea is to define once all the arguments and then be able to parse 
 them from the command line or configuration files
 
 ## Example
 
-Let's start with a simple example to demonstrate how it works :
+Let's start with a simple example to demonstrate how it works:
 
-let's create a file `app.py` containing : 
+Let's create a file `app.py` containing:
 ```python
 import upstride_argparse as argparse
 
@@ -30,28 +30,32 @@ print(config)
 
 so as you can see, the arguments are defined using a standard python list containing lists of `[type, name, default, help, condition]`
   - type can be a python type (`int`, `bool`, `str`, `float`) or a string `list[python_type]` for processing lists
-  - condition is a function called when the parameters will be parsed. if one parameter doesn't respect the condition, an exception will be raised.
+  - condition is a function called when the parameters are parsed. If it returns false, an exception is raised.
 
 Now let's try to call this program
-- `python app.py` prints `{'batch_size': 128, 'cpu': False, 'description': '', 'lr': 0.0001, 'raw_size': [256, 256, 3], 'yaml_config': []}`. This dictionary contains the default configuration
-- `python app.py --cpu --lr 0.1 --description hello --raw_size 28 28 1` prints `{'batch_size': 128, 'cpu': True, 'description': 'hello', 'lr': 0.1, 'raw_size': [28, 28, 1], 'yaml_config': []}`
+- `python app.py` prints<br>
+`{'batch_size': 128, 'cpu': False, 'description': '', 'lr': 0.0001, 'raw_size': [256, 256, 3], 'yaml_config': []}`. This dictionary contains the default configuration
+- `python app.py --cpu --lr 0.1 --description hello --raw_size 28 28 1` prints<br>
+`{'batch_size': 128, 'cpu': True, 'description': 'hello', 'lr': 0.1, 'raw_size': [28, 28, 1], 'yaml_config': []}`
 
-now lets create a yaml file `config.yml` containing :
+Now lets create a yaml file `config.yml` containing:
 ```yaml
 batch_size: 16
 cpu: true
 ```
 
-- `python app.py --yaml_config config.yml` prints `{'batch_size': 16, 'cpu': True, 'description': '', 'lr': 0.0001, 'raw_size': [256, 256, 3], 'yaml_config': []}`
-- `python app.py --yaml_config config.yml --cpu false` prints `{'batch_size': 16, 'cpu': False, 'description': '', 'lr': 0.0001, 'raw_size': [256, 256, 3], 'yaml_config': []}`
+- `python app.py --yaml_config config.yml` prints<br>
+`{'batch_size': 16, 'cpu': True, 'description': '', 'lr': 0.0001, 'raw_size': [256, 256, 3], 'yaml_config': []}`
+- `python app.py --yaml_config config.yml --cpu false` prints<br>
+`{'batch_size': 16, 'cpu': False, 'description': '', 'lr': 0.0001, 'raw_size': [256, 256, 3], 'yaml_config': []}`
 
-as you can see, the command line has the priority over the configuration file
+As you can see, the command line has priority over the configuration file.
 
-It is also possible to split the configuration between as many configuration file as you want
+It is also possible to split the configuration between as many configuration files as you want.
 
 ## Namespaces
 
-For larger project, it can become useful to define namespaces to organized the configuration. This can be done like this : 
+For larger projects, it can become useful to define namespaces to organize the configuration. This can be done like this:
 
 ```python
 import upstride_argparse as argparse
@@ -72,9 +76,10 @@ config = argparse.parse_cmd(arguments)
 print(config)
 ```
 
-- calling `python app.py` will print `{'batch_size': 128, 'yaml_config': [], 'first_namespace': {'arg1': 'hello', 'second_namespace': {'i_am_not_doing_anything': True, 'nether_do_i': False}}}`
+- calling `python app.py` prints<br>
+`{'batch_size': 128, 'yaml_config': [], 'first_namespace': {'arg1': 'hello', 'second_namespace': {'i_am_not_doing_anything': True, 'nether_do_i': False}}}`
 
-variable from namespace can be configure from yaml config file this way :
+Variables from a namespace can be configured from a yaml config file this way:
 
 ```yaml
 batch_size: 16
@@ -85,8 +90,11 @@ first_namespace:
     nether_do_i: true
 ```
 
-- calling `python app.py --yaml_config config.yml` will print `{'batch_size': 16, 'yaml_config': [], 'first_namespace': {'arg1': 'world', 'second_namespace': {'i_am_not_doing_anything': False, 'nether_do_i': True}}}`
+- calling `python app.py --yaml_config config.yml` prints<br>
+`{'batch_size': 16, 'yaml_config': [], 'first_namespace': {'arg1': 'world', 'second_namespace': {'i_am_not_doing_anything': False, 'nether_do_i': True}}}`
 
-and these variables can be setup from the command line like this : `python app.py --yaml_config config.yml --first_namespace.arg1 bob --first_namespace.second_namespace.i_am_not_doing_anything false`
+and these variables can be setup from the command line like this:<br>
+`python app.py --yaml_config config.yml --first_namespace.arg1 bob --first_namespace.second_namespace.i_am_not_doing_anything false`
 
-it will print : `{'batch_size': 16, 'yaml_config': [], 'first_namespace': {'arg1': 'bob', 'second_namespace': {'i_am_not_doing_anything': False, 'nether_do_i': True}}}`
+It prints<br>
+`{'batch_size': 16, 'yaml_config': [], 'first_namespace': {'arg1': 'bob', 'second_namespace': {'i_am_not_doing_anything': False, 'nether_do_i': True}}}`
