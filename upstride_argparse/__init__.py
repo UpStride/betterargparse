@@ -30,13 +30,14 @@ def str2bool(v):
     raise argparse.ArgumentTypeError('Boolean value expected.')
 
 
-def create_argparse(arguments, namespace='', parser=None):
+def create_argparse(arguments, namespace='', parser=None, description=None):
   """create argparse based on the list of arguments
 
   Args:
       arguments (List): list of [type, name, default, help, condition] or ['namespace', name, List]
       namespace (str, optional): [description]. Defaults to ''.
       parser (argparse, optional): instance of argparse. Defaults to None.
+      description: a short description of the program shown when printing out the options (--help)
 
   """
 
@@ -44,7 +45,7 @@ def create_argparse(arguments, namespace='', parser=None):
   init = False
   if parser is None:
     init = True
-    parser = argparse.ArgumentParser(description="")
+    parser = argparse.ArgumentParser(description=description)
 
   for argument in arguments:
     # see https://docs.python.org/3/library/argparse.html#nargs for use of nargs='?'
@@ -130,10 +131,10 @@ def check_and_add_defaults(arguments, parameters):
   return parameters
 
 
-def parse_cmd(arguments):
+def parse_cmd(arguments, description=None):
   # init parameters dict, read command line and conf file
   parameters = init_parameters(arguments)
-  args = create_argparse(arguments)
+  args = create_argparse(arguments, description=description)
   if "yaml_config" in vars(args) and vars(args)["yaml_config"] is not None:
     for conf_file in args.yaml_config:
       read_yaml_config(conf_file, parameters)
